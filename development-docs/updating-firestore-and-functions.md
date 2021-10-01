@@ -36,15 +36,20 @@ The [`firestore.rules`](../firestore.rules) file dictates the changes that can b
 
 # Functions
 
+## Emulators
 
+To run the functions locally and test changes before deploying, run:
 
+```
+npm run firebase:emulate
+```
 
 # Deploys
 
 First, log in to Firebase.
 
 ```
-npx firebase-tools login
+npm run firebase:login
 ```
 
 TODO - document how to switch projects, local, staging, production??
@@ -52,5 +57,5 @@ TODO - document how to switch projects, local, staging, production??
 Then, deploy the changes to the Firestore configuration and Functions.
 
 ```
-npx firebase-tools deploy
+npm run firebase:deploy
 ```

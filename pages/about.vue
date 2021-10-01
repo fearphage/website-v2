@@ -7,6 +7,12 @@
     />
     <h1 class="heading-title">About Commander Spellbook</h1>
 
+    <input class="input" type="text" v-model="message" />
+    <button @click="sendMessage" class="button">Send Message</button>
+    <button @click="lookup" class="button">lookup</button>
+    <button @click="edit" class="button">edit</button>
+    <button @click="create" class="button">create</button>
+
     <p>
       The Commander Spellbook project is a search engine for Commander/EDH
       combos and to make them easily available across all modern digital
@@ -75,6 +81,86 @@ export default Vue.extend({
   components: {
     ArtCircle,
     ExternalLink,
+  },
+
+  data() {
+    return {
+      message: "",
+    };
+  },
+  methods: {
+    async sendMessage() {
+      const res = await fetch(process.env.apiBaseUrl + "api/message", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ text: this.message }),
+      })
+        .then((res) => res.json())
+        .catch((err) => {
+          console.log(":(");
+          console.error(err);
+        });
+
+      console.log(res);
+    },
+    async lookup() {
+      // const ref = this.$fire.firestore.collection('users').doc(userId)
+      const ref = this.$fire.firestore.collection("foo").doc("foo");
+      console.log("got ref", ref);
+      try {
+        const doc = await ref.get();
+        console.log("resovled");
+        console.log(doc.exists);
+        console.log(doc.data());
+        if (doc.exists) {
+          return doc.data();
+        }
+      } catch (e) {
+        console.log("yikes");
+        console.log(e);
+      }
+    },
+
+    async edit() {
+      const currentDoc = await this.lookup();
+      const ref = this.$fire.firestore.collection("foo").doc("foo");
+
+      if (!currentDoc) {
+        console.log("current doc could not be found");
+        return;
+      }
+
+      console.log("baz", currentDoc.baz);
+
+      try {
+        await ref.update({
+          baz: currentDoc.baz.split("").reverse().join(""),
+        });
+      } catch (e) {
+        console.log("oops");
+        console.log(e);
+      }
+    },
+    async create() {
+      try {
+        await this.$fire.firestore
+          .collection("users")
+          .doc(this.$fire.auth.currentUser.uid)
+          .add({
+            username: "foo",
+            permissions: {
+              admin: true,
+              submit_combo: true,
+            },
+          });
+        console.log("done");
+      } catch (e) {
+        console.log("couldn't create");
+        console.log(e);
+      }
+    },
   },
 });
 </script>
