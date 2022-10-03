@@ -18,7 +18,7 @@
     "core-js": "^3.21.1",
     "dotenv": "^16.0.0",
     "firebase": "^9.6.8",
-    "firebase-tools": "^10.2.2",
+    "firebase-tools": "^11.13.0",
     "nuxt": "^2.15.8",
     "scryfall-client": "^0.20.0",
     "v-tooltip": "^2.1.3",
