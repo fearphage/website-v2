@@ -48,7 +48,7 @@
     "@commitlint/config-conventional": "^17.3.0",
     "cypress": "^12.2.0",
     "cypress-firebase": "^2.2.5",
-    "firebase-admin": "^11.4.1",
+    "firebase-admin": "^11.5.0",
     "firebase-tools": "11.18.0",
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
